@@ -1,168 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    </head>
+</head>
 <body class="bg-[#0D1117] text-slate-300 min-h-screen">
-    
-    <div class="max-w-5xl mx-auto px-6 py-12 md:py-20">
-        <article class="prose prose-invert max-w-none">
-            
-            <h1 class="text-3xl font-bold text-slate-100 mb-6">Kepler Exoplanet Candidate Filtering</h1>
-            
-            <h2 class="text-xl font-bold text-slate-200 mt-8 mb-4">Dataset & Feature Engineering</h2>
-            <!-- <p>...</p> -->
-            <h2>Dataset & Feature Engineering</h2>
-    <p><strong>Source:</strong> NASA Exoplanet Archive - Kepler Cumulative KOI Table</p>
-    <p>The dataset tracks 9,564 observation entries across 49 astronomical columns. The engine parses features split into distinct functional groups:</p>
-    <ul>
-        <li><strong>Transit (Planetary) Variables:</strong> koi_period (Orbital Period), koi_duration (Transit Duration), koi_depth (Transit Depth), koi_prad (Planetary Radius), koi_insol (Insolation Flux).</li>
-        <li><strong>Stellar Characteristics:</strong> koi_steff (Stellar Effective Temperature), koi_srad (Stellar Radius), koi_slogg (Surface Gravity).</li>
-        <li><strong>Target Label Configuration:</strong> Binomial target filtering out CANDIDATE states to focus purely on high-confidence CONFIRMED planets versus established FALSE POSITIVE detections.</li>
-    </ul>
 
-    <h2>🛠️ Tech Stack & Methodology</h2>
-    <div class="box">
-        <p><strong>Data Processing & Engineering:</strong> Pandas, NumPy, MinMaxScaler</p>
-        <p><strong>Analytical Formulations:</strong> SymPy (Symbolic mathematical operations and timing analyses)</p>
-        <p><strong>Machine Learning Models:</strong></p>
-        <ul>
-            <li>L1-Regularized Logistic Regression (Sparse baseline selection)</li>
-            <li>Decision Tree Classifier (Capturing initial split conditions)</li>
-            <li>Random Forest Ensemble (Aggregated forest to minimize variance and combat overfitting)</li>
-        </ul>
-        <p><strong>Validation Metrics:</strong> ROC-AUC Curves, Precision, Recall/Sensitivity, Specificity, Confusion Matrices, and Partial Dependence Plots (PDP) for interpretability.</p>
-    </div>
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        <a href="/" class="text-sm text-cyan-400 hover:text-cyan-300 mb-8 inline-block">← Back to Portfolio</a>
 
-    <h2>📉 Model Performance & Comparative Summary</h2>
-    <table>
-        <tr>
-            <th>ML Architecture</th>
-            <th>Area Under Curve (ROC-AUC)</th>
-            <th>Overall Accuracy</th>
-            <th>Primary Drivers Detected</th>
-        </tr>
-        <tr>
-            <td>Random Forest (Ensemble)</td>
-            <td>0.94</td>
-            <td>0.86</td>
-            <td>log_koi_prad, log_koi_period, log_koi_tce_plnt_num</td>
-        </tr>
-        <tr>
-            <td>Decision Tree</td>
-            <td>0.91</td>
-            <td>0.86</td>
-            <td>log_koi_prad, log_koi_period, log_koi_impact</td>
-        </tr>
-        <tr>
-            <td>L1 Logistic Regression</td>
-            <td>0.84</td>
-            <td>0.74</td>
-            <td>log_koi_prad, log_koi_period</td>
-        </tr>
-    </table>
+        <article class="text-slate-300">
+            <h1 class="text-4xl font-bold text-slate-100 mb-8">Kepler Exoplanet Candidate Filtering</h1>
 
-    <h2>🔑 Key Analytics Insights</h2>
-    <ul>
-        <li><strong>The Non-Linear Reality:</strong> Tree-based architectures significantly out-performed Logistic Regression. The dataset exhibits strict non-linear thresholds (e.g., specific planet radius cutoffs) that linear models inherently fail to fully grasp.</li>
-        <li><strong>The log_koi_prad Filter:</strong> Partial Dependence Plots reveal that planetary size acts as a strict gateway. For log_koi_prad values < 0.35, probability scores for exoplanet validation are maximized. Beyond 0.4, the predicted probability drops flatly to zero.</li>
-        <li><strong>Orbital Window:</strong> The Random Forest successfully isolated an optimal orbital period window (0.3 to 0.7 on log scale), filtering out coordinates noise (ra, dec) and purely emphasizing the physical indicators of a solar system structure.</li>
-    </ul>
-           
-            </article>
+            <h2 class="text-2xl font-semibold text-slate-200 mt-10 mb-4">Dataset & Feature Engineering</h2>
+            <p class="mb-4"><strong>Source:</strong> NASA Exoplanet Archive - Kepler Cumulative KOI Table</p>
+            <p class="mb-4">The dataset tracks 9,564 observation entries across 49 astronomical columns. The engine parses features split into distinct functional groups:</p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li><strong>Transit (Planetary) Variables:</strong> koi_period, koi_duration, koi_depth, koi_prad, koi_insol.</li>
+                <li><strong>Stellar Characteristics:</strong> koi_steff, koi_srad, koi_slogg.</li>
+                <li><strong>Target Label Configuration:</strong> Binomial target filtering to focus on CONFIRMED planets vs FALSE POSITIVE.</li>
+            </ul>
+
+            <h2 class="text-2xl font-semibold text-slate-200 mt-10 mb-4">🛠️ Tech Stack & Methodology</h2>
+            <div class="bg-[#161B22] p-6 rounded-xl border border-slate-800 mb-8">
+                <p class="mb-2"><strong>Data Processing:</strong> Pandas, NumPy, MinMaxScaler</p>
+                <p class="mb-2"><strong>Analytical Formulations:</strong> SymPy</p>
+                <p class="mb-2"><strong>Machine Learning:</strong> L1-Regularized Logistic Regression, Decision Tree, Random Forest Ensemble.</p>
+                <p><strong>Validation:</strong> ROC-AUC, Precision, Recall, Confusion Matrices, PDP.</p>
+            </div>
+
+            <h2 class="text-2xl font-semibold text-slate-200 mt-10 mb-4">📉 Model Performance</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse border border-slate-800">
+                    <thead>
+                        <tr class="bg-slate-800">
+                            <th class="p-3 border border-slate-700">Model</th>
+                            <th class="p-3 border border-slate-700">ROC-AUC</th>
+                            <th class="p-3 border border-slate-700">Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr><td class="p-3 border border-slate-700">Random Forest</td><td class="p-3 border border-slate-700">0.94</td><td class="p-3 border border-slate-700">0.86</td></tr>
+                        <tr><td class="p-3 border border-slate-700">Decision Tree</td><td class="p-3 border border-slate-700">0.91</td><td class="p-3 border border-slate-700">0.86</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="text-2xl font-semibold text-slate-200 mt-10 mb-4">🔑 Key Analytics Insights</h2>
+            <ul class="list-decimal pl-6 space-y-4">
+                <li><strong>Non-Linear Reality:</strong> Tree-based models outperformed linear ones due to threshold-based physical constraints.</li>
+                <li><strong>Gateway Variable:</strong> log_koi_prad < 0.35 is the critical threshold for validation.</li>
+                <li><strong>Orbital Window:</strong> Random Forest isolated a specific window (0.3 to 0.7 log scale) as physically relevant.</li>
+            </ul>
+        </article>
     </div>
 
     <script>lucide.createIcons();</script>
 </body>
-<!-- </html> -->
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        @page {
-            size: A4;
-            margin: 20mm;
-            background-color: #ffffff;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #2c3e50;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-        h1 { color: #005a8d; border-bottom: 2px solid #005a8d; padding-bottom: 10px; }
-        h2 { color: #005a8d; margin-top: 30px; border-left: 4px solid #005a8d; padding-left: 10px; }
-        h3 { color: #34495e; margin-top: 20px; }
-        .box { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 15px; border-radius: 5px; margin: 15px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
-</head>
-<body> -->
-    <!-- <h1>Kepler Exoplanet Candidate Filtering</h1>
-
-    <h2>Dataset & Feature Engineering</h2>
-    <p><strong>Source:</strong> NASA Exoplanet Archive - Kepler Cumulative KOI Table</p>
-    <p>The dataset tracks 9,564 observation entries across 49 astronomical columns. The engine parses features split into distinct functional groups:</p>
-    <ul>
-        <li><strong>Transit (Planetary) Variables:</strong> koi_period (Orbital Period), koi_duration (Transit Duration), koi_depth (Transit Depth), koi_prad (Planetary Radius), koi_insol (Insolation Flux).</li>
-        <li><strong>Stellar Characteristics:</strong> koi_steff (Stellar Effective Temperature), koi_srad (Stellar Radius), koi_slogg (Surface Gravity).</li>
-        <li><strong>Target Label Configuration:</strong> Binomial target filtering out CANDIDATE states to focus purely on high-confidence CONFIRMED planets versus established FALSE POSITIVE detections.</li>
-    </ul>
-
-    <h2>🛠️ Tech Stack & Methodology</h2>
-    <div class="box">
-        <p><strong>Data Processing & Engineering:</strong> Pandas, NumPy, MinMaxScaler</p>
-        <p><strong>Analytical Formulations:</strong> SymPy (Symbolic mathematical operations and timing analyses)</p>
-        <p><strong>Machine Learning Models:</strong></p>
-        <ul>
-            <li>L1-Regularized Logistic Regression (Sparse baseline selection)</li>
-            <li>Decision Tree Classifier (Capturing initial split conditions)</li>
-            <li>Random Forest Ensemble (Aggregated forest to minimize variance and combat overfitting)</li>
-        </ul>
-        <p><strong>Validation Metrics:</strong> ROC-AUC Curves, Precision, Recall/Sensitivity, Specificity, Confusion Matrices, and Partial Dependence Plots (PDP) for interpretability.</p>
-    </div>
-
-    <h2>📉 Model Performance & Comparative Summary</h2>
-    <table>
-        <tr>
-            <th>ML Architecture</th>
-            <th>Area Under Curve (ROC-AUC)</th>
-            <th>Overall Accuracy</th>
-            <th>Primary Drivers Detected</th>
-        </tr>
-        <tr>
-            <td>Random Forest (Ensemble)</td>
-            <td>0.94</td>
-            <td>0.86</td>
-            <td>log_koi_prad, log_koi_period, log_koi_tce_plnt_num</td>
-        </tr>
-        <tr>
-            <td>Decision Tree</td>
-            <td>0.91</td>
-            <td>0.86</td>
-            <td>log_koi_prad, log_koi_period, log_koi_impact</td>
-        </tr>
-        <tr>
-            <td>L1 Logistic Regression</td>
-            <td>0.84</td>
-            <td>0.74</td>
-            <td>log_koi_prad, log_koi_period</td>
-        </tr>
-    </table>
-
-    <h2>🔑 Key Analytics Insights</h2>
-    <ul>
-        <li><strong>The Non-Linear Reality:</strong> Tree-based architectures significantly out-performed Logistic Regression. The dataset exhibits strict non-linear thresholds (e.g., specific planet radius cutoffs) that linear models inherently fail to fully grasp.</li>
-        <li><strong>The log_koi_prad Filter:</strong> Partial Dependence Plots reveal that planetary size acts as a strict gateway. For log_koi_prad values < 0.35, probability scores for exoplanet validation are maximized. Beyond 0.4, the predicted probability drops flatly to zero.</li>
-        <li><strong>Orbital Window:</strong> The Random Forest successfully isolated an optimal orbital period window (0.3 to 0.7 on log scale), filtering out coordinates noise (ra, dec) and purely emphasizing the physical indicators of a solar system structure.</li>
-    </ul>
-</body>
-</html> -->
+</html>
